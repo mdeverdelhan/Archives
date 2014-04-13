@@ -1,0 +1,3 @@
+store = 0;
+    unlink(RESTOREFILE);
+    for (i = 0; i < hyd

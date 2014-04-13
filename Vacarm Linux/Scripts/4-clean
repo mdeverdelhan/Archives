@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Effacer tous les fonds d'écran déjà présents
+rm -rf /usr/share/backgrounds/*
+rm -rf /usr/share/gnome-background-properties/ubuntu-wallpapers.xml
+
+# Effacer tous les splash screens déjà présents
+rm -rf /usr/share/pixmaps/splash/*
+
+# Effacer les marques-pages de firefox déjà présents
+rm -rf /etc/firefox/profile/bookmarks.html
+
+
+rm -rf /etc/resolv.conf
+apt-get clean
+deborphan | xargs apt-get -y remove --purge
+COLUMNS=200 dpkg -l |grep ^rc |awk '{print $2} ' | xargs dpkg -P 

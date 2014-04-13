@@ -1,0 +1,183 @@
+#!/bin/sh
+
+if [ "$1" = "-h" ]; then
+	echo Options:
+	echo "  --prefix=path     prefix path where the SHARP development kit is installed (default: /opt). Also edit gcc-arm-env.sh for the correct values"
+	echo "  --enable-ssl      use when SSL lib is installed on your PDA"
+	echo "  --disable-ssl     use when SSL lib is NOT installed on your PDA (default)"
+	echo "  --help            this here"
+	exit 0
+fi
+if [ "$1" = "--help" ]; then
+	echo Options:
+	echo "  --prefix=path     prefix path where the SHARP development kit is installed (default: /opt). Also edit gcc-arm-env.sh for the correct values"
+	echo "  --enable-ssl      use when SSL lib is installed on your PDA"
+	echo "  --disable-ssl     use when SSL lib is NOT installed on your PDA (default)"
+	echo "  --help            this here"
+	exit 0
+fi
+
+EMBEDIX_LOCATION=""
+ENABLE_SSL="no"
+SSL_PATH=""
+SSL_IPATH=""
+CRYPTO_PATH=""
+STRIP=""
+ARM_LIB_PATH=""
+ARM_INC_PATH=""
+
+if [ "$1" = "--prefix=" ]; then
+	EMBEDIX_LOCATION=`echo "$1"|sed 's/.*--prefix=//'`
+	shift
+
+	if [ "$1" = "--enable-ssl" ]; then
+		ENABLE_SSL="yes"
+	fi
+	shift
+fi
+if [ "$1" = "--enable-ssl" ]; then
+	ENABLE_SSL="yes"
+	shift
+
+	if [ "$1" = "--prefix" ]; then
+		EMBEDIX_LOCATION=`echo "$1"|sed 's/.*--prefix=//'`
+	fi
+	shift
+fi
+
+if [ "X" = "X$EMBEDIX_LOCATION" ]; then
+	  EMBEDIX_LOCATION="/opt/"
+fi
+
+
+echo; echo "Setup cross-compile environment";echo
+. ./arm/gcc-arm-env.sh
+
+echo
+echo "Starting hydra auto configuration for ARM ..."
+echo
+echo "Checking for Sharp's ARM cross-compile environment for Linux in $EMBEDIX_LOCATION ..."
+if [ -x $CROSSCOMPILE/bin/arm-linux-gcc ];then
+	echo "Found cross-compiler arm-linux-gcc"
+	CC="arm-linux-gcc"
+else
+	echo "Error: Did not find cross-compiler"
+	exit 1
+
+
+fi
+if [ -d $EMBEDIX_LOCATION/Embedix/tools/arm-linux/usr/lib/ ];then
+	echo "Found ARM library path"
+	ARM_LIB_PATH="$EMBEDIX_LOCATION/Embedix/tools/arm-linux/lib/"
+	ARM_LIB_PATH="$ARM_LIB_PATH $EMBEDIX_LOCATION/Embedix/tools/arm-linux/usr/lib/"
+else
+	echo "Error: Did not find ARM library path"
+	exit 1
+fi
+if [ -d $EMBEDIX_LOCATION/Embedix/tools/arm-linux/usr/include/ ];then
+	echo "Found ARM include path"
+	ARM_INC_PATH="$EMBEDIX_LOCATION/Embedix/tools/arm-linux/usr/include/"
+	ARM_INC_PATH="$ARM_INC_PATH $EMBEDIX_LOCATION/Embedix/tools/arm-linux/include/"
+else
+	echo "Error: Did not find ARM library path"
+	exit 1
+fi
+
+if [ -x $EMBEDIX_LOCATION/Embedix/tools/arm-linux/bin/strip ];then
+	STRIP="$EMBEDIX_LOCATION/Embedix/tools/arm-linux/bin/strip"
+fi
+
+echo
+if [ "$ENABLE_SSL" = "yes" ];then
+	echo "Checking for openssl ..."
+	for i in $ARM_LIB_PATH
+	do
+		if [ "X" = "X$SSL_PATH" ]; then
+			if [ -f "$i/libssl.so" -o -f "$i/libssl.dylib" ]; then
+				SSL_PATH="$i"
+			fi
+		fi
+		if [ "X" = "X$SSL_PATH" ]; then
+			TMP_LIB=`/bin/ls $i/libssl.* 2> /dev/null | grep libssl.`
+			if [ -n "$TMP_LIB" ]; then
+				SSL_PATH="$i"
+			fi
+		fi
+		if [ "X" = "X$CRYPTO_PATH" ]; then
+			if [ -f "$i/libcrypto.so" -o -f "$i/libcrypto.dylib" ]; then
+				CRYPTO_PATH="$i"
+			fi
+		fi
+		if [ "X" = "X$CRYPTO_PATH" ]; then
+			TMP_LIB=`/bin/ls $i/libcrypto.* 2> /dev/null | grep libcrypto.`
+			if [ -n "$TMP_LIB" ]; then
+				CRYPTO_PATH="$i"
+			fi
+		fi
+	done
+fi # enable SSL
+
+for i in $ARM_INC_PATH
+do
+	  if [ "X" = "X$SSL_IPATH" ]; then
+	      if [ -f "$i/openssl/ssl.h" ]; then
+	          SSL_IPATH="$i"
+	      fi
+	  fi
+done
+
+if [ "X" = "X$SSL_PATH" ]; then
+	  SSL_IPATH=""
+	  CRYPTO_PATH=""
+fi
+if [ "X" = "X$SSL_IPATH" ]; then
+	  SSL_PATH=""
+	  CRYPTO_PATH=""
+fi
+if [ -n "$SSL_PATH" ]; then
+	  echo "                     ... found"
+fi
+if [ "X" = "X$SSL_PATH" ]; then
+	  echo "                     ... NOT found, SSL support disabled"
+fi
+
+echo
+XDEFINES=""
+XLIBS=""
+XLIBPATHS=""
+XIPATHS=""
+
+if [ -n "$SSL_PATH" ]; then
+	  XDEFINES="$XDEFINES -DOPENSSL"
+fi
+for i in $SSL_PATH $CRYPTO_PATH $ARM_LIB_PATH; do
+	  XLIBPATHS="$XLIBPATHS -L$i"
+done
+for i in $SSL_IPATH $ARM_INC_PATH
+do
+	XIPATHS="$XIPATHS -I$i"
+done
+if [ -n "$SSL_PATH" ]; then
+	  XLIBS="$XLIBS -lssl"
+fi
+if [ -n "$CRYPTO_PATH" ]; then
+	  XLIBS="$XLIBS -lcrypto"
+fi
+
+echo "CC=$CC" > Makefile
+echo "XIPATHS=$XIPATHS" >> Makefile
+echo "XDEFINES=$XDEFINES" >> Makefile
+echo "XLIBS=$XLIBS -lm" >> Makefile
+echo "XLIBPATHS=$XLIBPATHS" >> Makefile
+echo "PREFIX=$PREFIX" >> Makefile
+echo "STRIP=$STRIP" >> Makefile
+cat Makefile.am >> Makefile
+
+echo "Resulting binary will run on Sharp Zaurus and iPAQ with Linux."
+echo
+echo "Now type \"make\" and \"make buildipkg\""
+if [ "$ENABLE_SSL" = "yes" ];then
+	echo
+	echo "You have enabled SSL support for your ARM architecture."
+	echo "Make sure you installed Debian's libssl for ARM IPKG-Package."
+fi

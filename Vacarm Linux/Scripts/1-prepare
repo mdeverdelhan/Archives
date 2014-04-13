@@ -1,0 +1,63 @@
+#!/bin/bash
+
+NBARGS=1				# Nombre d'arguments à passer au script
+WORKSPACE=~/remaster_workspace		# Repertoire de travail
+
+if [ "$#" -ne "$NBARGS" ] # Test du nombre d'argument.
+then
+	echo "Utilisation : $0 <chemin de l'iso>"
+	echo
+	exit 1
+fi
+
+
+if [ -f "$1" ] # Test de l'existence de l'image iso.
+then
+	nom_fichier_iso=$1
+else
+	echo "Le fichier \"$1\" n'existe pas."
+	echo
+	exit 2
+fi
+
+	
+# Installation des programmes nécessaires
+#sudo apt-get install squashfs-tools mkisofs qemu xnest libbogl-dev
+#sudo modprobe squashfs
+
+echo
+echo "Création du répertoire de travail"
+mkdir ${WORKSPACE}
+
+echo
+echo "Extraction du contenu du CD"
+mkdir ${WORKSPACE}/iso
+sudo mount -o loop "${nom_fichier_iso}" ${WORKSPACE}/iso
+mkdir ${WORKSPACE}/extract-cd
+rsync --exclude=/casper/filesystem.squashfs -a ${WORKSPACE}/iso/ ${WORKSPACE}/extract-cd
+
+echo
+echo "Extraction du initrd"
+mkdir ${WORKSPACE}/initrd
+cd ${WORKSPACE}/initrd
+cat ../iso/casper/initrd.gz | gzip -d | cpio -i
+cd ..
+
+echo
+echo "Extraction du système ubuntu"
+mkdir ${WORKSPACE}/sys
+sudo mount -t squashfs -o loop ${WORKSPACE}/iso/casper/filesystem.squashfs sys
+mkdir ${WORKSPACE}/extract-squashfs
+sudo cp -a ${WORKSPACE}/sys/* ${WORKSPACE}/extract-squashfs/
+
+echo
+echo "Démontage du cd et du système"
+sudo umount ${WORKSPACE}/sys/
+sudo umount ${WORKSPACE}/iso/
+rm -rf ${WORKSPACE}/sys/
+rm -rf ${WORKSPACE}/iso/
+
+echo 
+echo "Fin du script"
+exit 0
+### EOF ###

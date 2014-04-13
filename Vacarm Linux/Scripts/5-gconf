@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Afficher le home sur le bureau
+gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults/ --type bool --set /apps/nautilus/desktop/home_icon_visible true
+
+# Donner le nom "HOME" au home sur le bureau
+gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults/ --type string --set /apps/nautilus/desktop/home_icon_name HOME
+
+# Changement du fond d'écran du bureau
+gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults/ --type string --set /desktop/gnome/background/picture_filename /usr/share/backgrounds/wp.png
+
+# Changer le splash screen au démarrage de la session
+gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults/ --type string --set /apps/gnome-session/options/splash_image <chemin_du_splash>
+
+# Ne plus afficher le splash screen au démarrage de la session
+gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults/ --type bool --set /apps/gnome-session/options/show_splash_screen false
+
+# Couleur noir pour le fond du terminal
+gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults/ --type string --set /apps/gnome-terminal/profiles/Default/background_color \#000000
+
+# Opacité du terminal à 50%
+gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults/ --type float --set /apps/gnome-terminal/profiles/Default/background_darkness 0.5
+
+# Transparence du terminal
+gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults/ --type string --set /apps/gnome-terminal/profiles/Default/background_type transparent
+
+# Couleur verte pour l'écriture du terminal
+gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults/ --type string --set /apps/gnome-terminal/profiles/Default/foreground_color \#59FF37
+
+# Ne plus utiliser les couleurs du thème pour le terminal
+gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults/ --type bool --set /apps/gnome-terminal/profiles/Default/use_theme_colors false
+
+# L'écran de veille se lance au bout de 60 minutes d'inactivité
+gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults/ --type int --set /apps/gnome-screensaver/idle_delay 60

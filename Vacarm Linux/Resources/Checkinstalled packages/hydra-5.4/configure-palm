@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo 'type "cd palm" followed by "make"'
+echo 'The m68k-palmos-* tools must be in your PATH'

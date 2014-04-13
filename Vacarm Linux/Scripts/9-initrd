@@ -1,0 +1,19 @@
+#!/bin/bash
+
+WORKSPACE=~/remaster_workspace		# répertoire de travail
+
+# Edition des fichiers du initrd
+nano ${WORKSPACE}/initrd/etc/casper.conf
+
+# Pour l'hostname, le nom d'user, etc. Mais l'edition de casper.conf peut suffir.
+nano ${WORKSPACE}/initrd/scripts/casper
+
+nano ${WORKSPACE}/initrd/scripts/casper-functions
+nano ${WORKSPACE}/initrd/scripts/init-top/usplash
+
+
+# Eventuellement. Pour la configuration de la console.
+nano ${WORKSPACE}/initrd/etc/default/console-setup
+
+# Normalement pas celui là.
+nano ${WORKSPACE}/initrd/init

@@ -1,0 +1,37 @@
+1.0.4
+  01 Jun 2006
+  * bugfix: without-privoxy settings were incorrect
+  * bugfix: https settings did not take effect until firefox restart
+  * bugfix: let firefox generate our about box, so it will include the version
+
+1.0.3
+  31 May 2006
+  * bugfix: statusbar style would reset to text after firefox restart
+
+1.0.2
+  23 May 2006
+  * bugfix: fixed problem with socks_remote_dns
+  * new: mozilla thunderbird support
+  * new: user may customize proxy settings for nonstandard configurations
+  * new: option to not use privoxy in the standard configuration
+  * new: slovenian translation
+  * new: french translation
+  * new: keyboard shortcut (control-shift-t, changeable via keyconfig)
+  * new: context menu for toolbar button and statusbar panel
+  * new: attractive tor icons
+  * new: about dialog
+  * new: option to display statusbar as an icon instead of text
+
+1.0.1
+  16 Mar 2006
+  * bugfix: toolbar button tooltips now display the correct status
+  * bugfix: set socks5 proxy to tor port (9050) instead of privoxy (8118)
+  * bugfix: allow user to change proxy exclusion list ("no proxy for")
+  * new: use socks_remote_dns on firefox versions that have it
+  * new: added update functionality through the extensions manager
+  * new: added preference: display statusbar panel (yes/no)
+  * new: added compatibility with firefox 1.0 and 0.9
+
+1.0
+  07 Mar 2006
+  * initial release

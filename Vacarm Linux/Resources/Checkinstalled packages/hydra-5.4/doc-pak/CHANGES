@@ -1,0 +1,395 @@
+Changelog for hydra
+-------------------
+
+Release 5.4
+###########
+* Fixes to the http modules as some Apache installations are picky
+* The MySQL module also works with mysqld-5.0, updated
+* Added AS/400 return code checks to pop3 module
+* Fixed memory leaks in the http-form module.
+* Implemented a proposal by Jean-Baptiste.BEAUFRETON (at) turbomeca.fr to
+  check for "530 user unknown" message in the ftp module
+* Added a performance patch by alejandro.mendiondo (at) baicom.com. This one
+  needs stability testing!
+* Beautification to remove compiler warnings of modern gcc
+
+
+Release 5.3
+###########
+* Added NTLM support modules for pop3, imap, smtp-auth and http-proxy.
+  Work done by ilo (at) reversing.org. THANKS!
+* Added a http form module, thanks to phil (at) irmplc.com
+* Fixed a bug in the vnc module (thanks to kan (at) dcit.cz)
+* Input files may *not* contain null bytes. I might fix that in the future
+  but currently I have enough other things on my todo sheet.
+  Thanks to didiln (at) gmail.com for reporting.
+
+
+Release 5.2
+###########
+* Again again some fixes for the ssh2 module. This is the last try. If it
+  finally does not work reliable, I am throwing out that library!
+  Thanks to bykhe@mymail.ch for the patch
+* Added a new module: VMWare-Auth! Thanks to david.maciejak@gmail.com!
+
+
+Release 5.1
+###########
+* Again some fixed for the ssh2 module. Sorry. And still it might not work
+  in all occasions. The libssh is not as mature as we all wish it would be :-(
+* HYDRA_PROXY_AUTH was never used ... weird that nobody reported that. fixed.
+* Fixed bug in the base64 encoding function
+* Added an md5.h include which is needed since openssl 0.9.8
+* Added an enhacement to the FTP module, thanks to piotr_sobolewski@o2.pl
+* Fixed a bug when not using passwords and just -e n/s
+
+
+Release 5.0
+###########
+! THIS IS A THC - TAX - 10TH ANNIVERSARY RELEASE ! HAVE FUN !
+* Increadible speed-up for most modules :-)
+* Added module for PC-Anywhere, thanks to david.maciejak(at)kyxar.fr!
+* Added module for SVN, thanks to david.maciejak(at)kyxar.fr!
+* Added --disable-xhydra option to configure, thanks to david.maciejak(at)kyxar.fr!
+  - he is becoming the top supporter :-)
+* Added module for SIP (VoIP), thanks to gh0st(at)staatsfeind.org
+* Added support for newer sap r/3 rfcsdk
+* Added check to the telnet module to work with Cisco AAA
+* Fix for the VNC module, thanks to xmag
+* Small enhancement to the mysql plugin by pjohnson(at)bosconet.org
+
+
+Release 4.7
+###########
+* Updated ssh2 support to libssh v0.11 - you *must* use this version if
+  you want to use ssh2! download from http://www.0xbadc0de.be/?part=libssh
+  This hopefully fixes problems on/against Sun machines.
+  After fixing, I also received a patch from david maciejak - thanks :-)
+* Added an attack module for rlogin and rsh, thanks to
+  david.maciejak(at)kyxar.fr!
+* Added an attack module for the postgres database, thanks to
+  diaul(at)devilopers.org! (and again: david maciejak sent on in as well)
+* JoMo-Kun sent in an update for his smbnt module. cool new features:
+  win2k native mode, xp anonymous account detection, machine name as password
+* Hopefully made VNC 3.7 protocol versions to work. please report.
+* Switched http and https service module to http-head, http-get and
+  https-get, https-head. Some web servers want HEAD, others only GET
+* An initial password for cisco-enable is now not required anymore. Some
+  people had console access without password, so this was necessary.
+* Fixed a bug in xhydra which did not allow custom ports > 100
+! Soon to come: v5.0 - some cool new features to arrive on your pentest
+  machine!
+
+
+Release 4.6
+###########
+* Snakebyte delivered a module for Teamspeak
+* Snakebyte updated the rexec module for the Hydra Palm version
+* Snakebyte updated xhydra to support the new Telnet success response option
+* Clarified the Licence
+* Updated the ldap module to support v3, note that "ldap" is now specified as
+  "ldap2" or "ldap3". Added wrong version detection.
+
+
+Release 4.5
+###########
+* The configure script now detects Cygwin automatically :-)
+* The telnet module now handles the OPT special input. Specify the string
+  which is displayed after successfully a login. Use this if you have false
+  positives.
+* Made smtp-auth module more flexible in EHLO/HELO handling
+* Fixed some glitches in the SAP/R3 module (correct sysnr, better port
+  handling) thanks to ngregoire@exaprobe.com !
+* Fixed some glitches in the http/https module
+* Fixed a big bug in snakebyte's snmp module 
+* Warning msg is now displayed if the deprecated icq module is used
+* Added warning message to the ssh2 module during compilation as many people
+  use the newest libssh version which is broken.
+
+
+Release 4.4
+###########
+* Fixed another floating point exception *sigh*
+* Fixed -C colon mode
+* Added EHLO support for the smtp-auth module, required for some smtpd
+
+
+Release 4.3
+###########
+* Fixed a divide by zero bug in the status report function
+* Added functionality for skipping accounts (cvs is so nice to report this)
+* Snakebyte sent in a patch for cvs for skipping nonexisting accounts
+* <lerrahn@syss.de> sent in a patch to fix proxy support for the HTTP module
+  without proxy authentication
+
+
+Release 4.2
+###########
+* Snakebyte sent in modules for SNMP and CVS - great work!
+* Snakebyte also expanded the gtk gui to support the two new modules
+* Justin <connectjunkie@gmail.com> sent in a module for smtp-auth ... thanks!
+* master_up@post.cz sent in some few patches to fix small glitches
+* Incorporated a check from the openbsd port
+
+
+Release 4.1
+###########
+* Snakebyte wrote a very nice GTK GUI for hydra! enjoy!
+* due a bug, sometimes hydra would kill process -1 ... baaaad boy!
+* found passwords are now also printed to stdout if -o option is used
+* <je@sekure.net> reported that hydra wouldn't complain on ssh2 option if
+  compiled without support, fixed
+* <llevier@argosnet.com> made an official port for FreeBSD and sent me a
+  diff to exchange the MD4 of libdes to openssl
+* <vh@helith.net> noticed that hydra will crash on big wordlists as
+  the result of the mallocs there were not checked, fixed
+* Snakebyte expanded his PalmOS Version of hydra to nntp and fixed vnc
+* Increased the wait time for children from 5 to 15 seconds, as e.g.
+  snakebyte reported detection problems
+* Fixed some display glitches
+
+
+Release v4.0
+############
+#
+# This is a summary of changes of the D1 to D5 beta releases and shows
+# what makes v4.0 different from 3.1.
+# Have fun. Lots of it.
+#
+# By the way: I need someone to program a nice GTK frontend for hydra,
+# would YOU like to do that and receive the fame? Send an email to vh@thc.org !
+#
+* For the first time there is not only a UNIX/source release but additionally:
+   ! Windows release (cygwin compile with dll's)
+   ! PalmPilot release
+   ! ARM processor release (for all your Zaurus, iPaq etc. running Linux)
+* There are new service attack modules:
+   ! ms-sql
+   ! sap r/3 (requires a library)
+   ! ssh v2 (requires a library)
+* Enhancements/Fixes to service attack modules:
+   ! vnc module didnt work correctly, fixed
+   ! mysql module supports newer versions now
+   ! http module received a minor fix and has better virtual host support now
+   ! http-proxy supports now an optional URL
+   ! socks5 checks now for false positives and daemons without authentication
+* The core code (hydra.c) was rewritten from scratch
+   ! rewrote the internal distribution functions from scratch. code is now
+     safer, less error prone, easier to read.
+   ! multiple target support rewritten which now includes intelligent load
+     balancing based on success, error and load rate
+   ! intelligently detect maximum connect numbers for services (per server if
+     multiple targets are used)
+   ! intelligent restore file writing
+   ! Faster (up to 15%)
+   ! Full Cygwin and Cygwin IPv6 support
+* added new tool: pw-inspector - it can be used to just try passwords which
+  matches the target's password policy
+#
+# This should be more than enough! :-)
+#
+
+... the rest below is history ...
+
+###########################################################################
+#
+# New Hydra v4.0 code branch
+#
+Release D5
+* added patches by kan@dcit.cz which enhance the proxy module and provide
+  a small fix for the http module
+* small beautifcations to make the compiler happy
+! This is the final beta version before public release
+  - please test everything!
+
+Release D4
+* Tick made an update to his configure-arm
+* snakebyte@gmx.de added imap, vnc and cisco module support to PalmPilot
+* fixed VNC module
+* enhanced mysql module to work also with 4.0.x (and all future protocol 10
+  mysql protocol types)
+* enhanced socks5 module to identify daemons which do not require
+  authentication, and false positive check (otherwise dante would report all
+  tries as successful)
+* fixed a bug in configure for D3 which resulted in compile problems on
+  several platforms requiring libcrypto
+
+Release D3
+* added sapr3 attack module (requires libsdk.a and saprfc.h)
+* added ssh2 attack module (requires libssh)
+* snakebyte@gmx.de added telnet module support for PalmPilot
+* fixed the mssql module, should work now
+* fixed -e option bug
+* fixed -C option bug (didnt work at all!!)
+* fixed double detection (with -e option) plus added simple dictionary
+  double detection
+* target port is now displayed on start
+
+Release D2
+* added better virtual host support to the www/http/https/ssl module
+  (based on a patch from alla@scanit.be)
+* added ARM support (does not work for libdes yet, ssl works), done by
+  Tick <tick@thc.org>
+* added Palm support (well, in reality it is more a rewrite which can use
+  the hydra-modules), done by snakebyte <snakebyte@gmx.de>
+* added ms-sql attack module (code based on perl script form HD Moore
+  <hdm@digitaloffense.net>, thanks for contributing)
+
+Release D1 (3 March 2003)
+* rewrote the internal distribution functions from scratch. code is now
+  safer, less error prone, easier to read.
+* multiple target support rewritten which now includes intelligent load
+  balancing based on success, error and load rate
+* intelligently detect maximum connect numbers for services (per server if
+  multiple targets are used)
+* intelligent restore file writing
+* Faster (up to 15%)
+* Full Cygwin and Cygwin IPv6 support
+* added new tool: pw-inspector - it can be used to just try passwords which
+  matches the target's password policy
+
+###########################################################################
+
+v3.0 (FEBRUARY 2004)		PUBLIC RELEASE
+* added a restore function to enable you to continue aborted/crashed
+  sessions. Just type "hydra -R" to continue a session.
+  NOTE: this does not work with the -M option! This feature is then disabled!
+* added a module for http proxy authentication cracking ("http-proxy") :-)
+* added HTTP and SSL/CONNECT proxy support. SSL/CONNECT proxy support works
+  for *all* TCP protocols, you just need to find a proxy which allows you to
+  CONNECT on port 23 ...
+  The environment variable HYDRA_PROXY_HTTP defines the web proxy. The
+  following syntax is valid: HYDRA_PROXY_HTTP="http://123.45.67.89:8080/"
+  Same for HYDRA_PROXY_CONNECT.
+  If you require authentication for the proxy, use the HYDRA_PROXY_AUTH
+  environment variable:
+    HYDRA_PROXY_AUTH="login:password"
+* fixed parallel host scanning engine (thanks to m0j0.j0j0 for reporting)
+* A status, speed and time to completion report is now printed every minute.
+* finally updated the README
+
+v2.9 (FEBRUARY 2004)		PRIVATE RELEASE
+...
+
+v2.8 (JANUARY 2004)		PRIVATE RELEASE
+...
+
+v2.7 (JANUARY 2004)		PUBLIC RELEASE
+* small fix for the parallel host code (thanks to m0j0@foofus.net)
+
+v2.6 (DECEMBER 2003)		PUBLIC RELEASE
+* fixed a compiling problem for picky compilers.
+
+v2.5 (NOVEMBER 2003)		PUBLIC RELEASE
+* added a big patch from m0j0@foofus.net which adds:
+    - AAA authentication to the cisco-enable module
+    - Running the attacks on hosts in parallel
+    - new smbnt module, which uses lanman hashes for authentication, needs libdes
+  ! great work and thanks !
+* changed code to compile easily on FreeBSD
+* changed configure to compile easily on MacOS X - Panther (cool OS btw ...)
+
+v2.4 (AUGUST 2003)		PUBLIC RELEASE
+* public release
+=== 2.3 stuff===
+* added mysql module (thanks to mcbethh@u-n-f.com)
+* small fix in vnc (thanks to the Nessus team)
+* added credits for vnc-module (FX/Phenolite)
+* new ./configure script for better Solaris and *BSD support (copied from amap)
+* updated to new email/www addresses => www.thc.org
+
+v2.2 (OCTOBER 2002)		PUBLIC RELEASE
+* fixed a bug in the -P passwordfile handling ... uhhh ... thanks to all
+  the many people who reported that bug!
+* added check if a password in -P passwordfile was already done via the
+  -e n|s switch
+
+v2.1 (APRIL 2002)		PUBLIC RELEASE
+* added ldap cracking mode (thanks to myself, eh ;-)
+* added -e option to try null passwords ("-e n") and passwords equal to the
+  login ("-e s"). When specifying -e, -p/-P is optional (and vice versa)
+* when a login is found, hydra will now go on with the next login
+
+v2.0 (APRIL 2002)		PRIVATE RELEASE
+! with v1.1.14 of Nessus, Hydra is a Nessus plugin!
+* incorporated code to make hydra a nessus plugin (thanks to deraison@cvs.nessus.org !)
+* added smb/samba/CIFS cracking mode (thanks to deraison@cvs.nessus.org !)
+* added cisco-enable cracking mode (thanks to J.Marx@secunet.de !)
+* minor enhancements and fixes
+
+v1.7 (MARCH 2002)		PRIVATE RELEASE
+* configure change to better detect OpenSSL
+* ported to Solaris
+
+v1.6 (FEBRUARY 2002)		PUBLIC RELEASE
+* added socks5 support (thanks to bigbud@weed.tc !)
+
+v1.5 (DECEMBER 2001)		PRIVATE RELEASE
+* added -S option for SSL support (for all TCP based protocols)
+* added -f option to stop attacking once a valid login/pw has been discovered
+* made modules more hydra-mod compliant
+* configure stuff thrown out - was not really used and too complicated,
+  wrote my own, lets hope it works everywhere ;-)
+
+v1.4 (DECEMBER 2001)		PUBLIC RELEASE
+* added REXEC cracking module
+* added NNTP cracking module
+* added VNC cracking module (plus the 3DES library, which is needed) - some
+  of the code ripped from FX/Phenolite :-) thanks a lot
+* added PCNFS cracking module
+* added ICQ cracking module (thanks to ocsic <pisco@private.as>!!)
+* for the pcnfs cracking module, I had to add the hydra_connect_udp function
+* added several compactibility stuff to work with all the M$ crap
+
+v1.3 (September 2001)		PUBLIC RELEASE
+* uh W2K telnetd sends null bytes in negotiation mode. workaround implemented.
+* Rewrote the finish functions which would sometimes hang. Shutdowns are faster
+  now as well.
+* Fixed the line count (it was always one to much)
+* Put more information in the outpufile (-o)
+* Removed some configure crap.
+
+v1.2 (August 2001)		PRIVATE RELEASE
+* Fixed a BIG bug which resulted in accounts being checked serveral times. ugh
+* Fixed the bug which showed the wrong password for a telnet hack. Works for
+  me. please test.
+* Added http basic authentication cracking. Works for me. please test.
+* Fixed the ftp cracker module for occasions where a long welcome message was
+  displayed for ftp.
+* Removed some compiler warnings.
+
+v1.1 (May 2001)			PUBLIC RELEASE
+* Added wait+reconnect functionality to hydra-mod
+* Additional wait+reconnect for cisco module
+* Added small waittimes to all attack modules to prevent too fast reconnects
+* Added cisco Username/Password support to the telnet module
+* Fixed a deadlock in the modules, plus an additional one in the telnet module
+
+v1.0 (April 2001)		PUBLIC RELEASE
+* Verified that all service modules really work, no fix necessary ;-)
+  ... so let's make it public
+* Changed the LICENCE
+
+v0.6 (April 2001)		PRIVATE RELEASE
+* Added hydra-cisco.c for the cisco 3 times "Password:" type
+* Added hydra-imap.c for the imap service
+* Fixed a bug in hydra-mod.c: empty logins resulted in an empty
+  hydra_get_next_password() :-(, additionally the blocking/recv works better
+  now. (no, not better - perfect ;-)
+* Fixed a bug in hydra-telnet.c: too many false alarms for success due some
+  mis-thinking on my side and I also implemented a more flexible checking
+* Fixed hydra-ftp.c to allow more weird reactions
+* Fixed all ;-) memory leaks
+
+v0.5 (December 2000)		PUBLIC RELEASE
+* NOTE WE HAVE GOT A NEW WWW ADDRESS -> www.thehackerschoice.com
+* added telnet protocol
+* exchanged snprintf with sprintf(%.250s) to let it compile on more platforms
+  but still have buffer overflow protection.
+* fixed a bug in Makefile.in (introduced by Plasmo ,-)
+
+v0.4 (August 2000)		PUBLIC RELEASE
+* Plasmoid added a ./configure script. thanks!
+
+v0.3 (August 2000)
+* first release

@@ -1,0 +1,58 @@
+#!/bin/bash
+
+WORKSPACE=~/remaster_workspace		# Repertoire de travail
+NOM_ISO=cdname.iso			# Nom du fichier iso
+NOM_DIST="Vacarm Linux"			# Nom de la distribution
+VERS_DIST="0.1"				# Version de la distribution
+
+cd ${WORKSPACE}
+
+sudo chroot extract-squashfs umount /proc
+sudo chroot extract-squashfs umount /sys
+sudo chroot extract-squashfs rm -rf /tmp/*
+
+
+echo "Génération du manifest"
+sudo chmod +w extract-cd/casper/filesystem.manifest
+sudo chroot extract-squashfs dpkg-query -W --showformat='${Package} ${version}\n' > extract-cd/casper/filesystem.manifest
+
+echo
+echo "Recompression du système"
+#sudo rm -f extract-cd/casper/filesystem.squashfs
+#sudo mksquashfs extract-squashfs extract-cd/casper/filesystem.squashfs
+
+echo
+echo "Recompression du initrd"
+#cd initrd
+#find | cpio -H newc -o | gzip > ../initrd.gz
+#cd ..
+#sudo mv -f initrd.gz extract-cd/casper/
+
+#sudo nano extract-cd/README.diskdefines
+
+echo "Calculs des hashs md5"
+#sudo -s
+#(cd extract-cd && find . -type f -print0 | xargs -0 md5sum > md5sum.txt)
+#exit
+
+echo "Création de l'iso"
+cd extract-cd
+sudo mkisofs -r -V "${NOM_DIST} ${VERS_DIST}" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../${NOM_ISO} .
+
+cd ..
+
+# Création du dpkg -l de la nouvelle distribution.
+#sudo chroot extract-squashfs dpkg -l > dpkg-l.txt
+
+# Création de la somme MD5 de l'iso
+md5sum ${NOM_ISO} > MD5SUM
+
+
+#echo "Création d'un fichier de swap de 750 MB"
+#dd if=/dev/zero of=swapfile bs=1M count=750
+#mkswap swapfile
+#sudo swapon swapfile
+
+#qemu -cdrom ./cdname.iso -boot d -m 1024 &
+
+

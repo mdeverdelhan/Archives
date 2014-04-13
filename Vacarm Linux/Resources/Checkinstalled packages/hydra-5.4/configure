@@ -1,0 +1,459 @@
+#!/bin/sh
+
+if [ "$1" = "-h" ]; then
+  echo Options:
+  echo "  --prefix=path     prefix path to install hydra and its datafiles to"
+  echo "  --disable-xhydra  disable compilation of hydra GUI"
+  echo "  --help            this here"
+  exit 0
+fi
+if [ "$1" = "--help" ]; then
+  echo Options:
+  echo "  --prefix=path     path to install hydra and its datafiles to"
+  echo "  --disable-xhydra  disable compilation of hydra GUI"
+  echo "  --help            this here"
+  exit 0
+fi
+
+echo
+echo "Starting hydra auto configuration ..."
+rm -f Makefile.in
+PREFIX=""
+SSL_PATH=""
+SSL_IPATH=""
+CRYPTO_PATH=""
+POSTGRES_PATH=""
+SVN_PATH=""
+SVN_IPATH=""
+APR_IPATH=""
+SAPR3_PATH=""
+SAPR3_IPATH=""
+SSH_PATH=""
+SSH_IPATH=""
+NSL_PATH=""
+SOCKET_PATH=""
+MANDIR=""
+XHYDRA_SUPPORT=""
+LIBDIRS=`cat /etc/ld.so.conf 2> /dev/null`
+STRIP="strip"
+echo
+
+echo "Checking for openssl (libssl/ssl.h) ..."
+for i in  $LIBDIRS /lib  /usr/lib /usr/local/lib /opt/local/lib \
+/*ssl /usr/*ssl /opt/*ssl /usr/local/*ssl /opt/local/*ssl \
+/*ssl/lib /usr/*ssl/lib /opt/*ssl/lib /usr/local/*ssl/lib /opt/local/*ssl/lib .
+do
+    if [ "X" = "X$SSL_PATH" ]; then
+        if [ -f "$i/libssl.so" -o -f "$i/libssl.dylib" ]; then
+            SSL_PATH="$i"
+        fi
+    fi
+    if [ "X" = "X$SSL_PATH" ]; then
+        TMP_LIB=`/bin/ls $i/libssl.so* /bin/cygssl*.dll 2> /dev/null | grep ssl`
+        if [ -n "$TMP_LIB" ]; then
+          SSL_PATH="$i"
+        fi
+    fi
+    if [ "X" = "X$CRYPTO_PATH" ]; then
+        if [ -f "$i/libcrypto.so" -o -f "$i/libcrypto.dylib" ]; then
+            CRYPTO_PATH="$i"
+        fi
+    fi
+    if [ "X" = "X$CRYPTO_PATH" ]; then
+        TMP_LIB=`/bin/ls $i/libcrypto.so* /bin/cygcrypto*.dll 2> /dev/null | grep crypto`
+        if [ -n "$TMP_LIB" ]; then
+          CRYPTO_PATH="$i"
+        fi
+    fi
+done
+
+for i in /usr/local/include /*ssl/include /usr/include \
+/opt/*ssl/include /usr/*ssl/include /usr/local/*ssl/include .
+do
+    if [ "X" = "X$SSL_IPATH" ]; then
+        if [ -f "$i/openssl/ssl.h" ]; then
+            SSL_IPATH="$i"
+        fi
+    fi
+done
+
+if [ "X" = "X$SSL_PATH" ]; then
+    SSL_IPATH=""
+    CRYPTO_PATH=""
+fi
+if [ "X" = "X$SSL_IPATH" ]; then
+    SSL_PATH=""
+    CRYPTO_PATH=""
+fi
+if [ -n "$SSL_PATH" ]; then
+    echo "                                    ... found"
+fi
+if [ "X" = "X$SSL_PATH" ]; then
+    echo "                                    ... NOT found, SSL support disabled"
+    echo "Get it from http://www.openssl.org"
+fi
+if [ "$SSL_IPATH" = "/usr/include" ]; then
+    SSL_IPATH=""
+fi
+
+echo "Checking for Postgres (libpq) ..."
+for i in  $LIBDIRS /lib  /usr/lib /usr/local/lib /opt/local/lib .
+do
+    if [ "X" = "X$POSTGRES_PATH" ]; then
+        if [ -f "$i/libpq.so" -o -f "$i/libpq.dylib" ]; then
+            POSTGRES_PATH="$i"
+        fi
+    fi
+    if [ "X" = "X$POSTGRES_PATH" ]; then
+        TMP_LIB=`/bin/ls $i/libpq.so* /bin/cygpq*.dll 2> /dev/null | grep pq`
+        if [ -n "$TMP_LIB" ]; then
+          POSTGRES_PATH="$i"
+        fi
+    fi
+done
+if [ -n "$POSTGRES_PATH" ]; then
+    echo "                              ... found"
+fi
+if [ "X" = "X$POSTGRES_PATH" ]; then
+    echo "                              ... NOT found, module postgres disabled"
+fi
+
+echo "Checking for SVN (ibsvn_client-1 libapr-0.so libaprutil-0.so) ..."
+for i in  $LIBDIRS /lib  /usr/lib /usr/local/lib /opt/local/lib .
+do
+    if [ "X" = "X$SVN_PATH" ]; then
+        if [ -f "$i/libsvn_client-1.so" ]&&[ -f "$i/libapr-0.so" ]&&[ -f "$i/libaprutil-0.so" ]; then
+            SVN_PATH="$i"
+        fi
+    fi
+    if [ "X" = "X$SVN_PATH" ]; then
+        TMP_LIB=`/bin/ls $i/libsvn_client*.so* 2> /dev/null | grep libsvn_client.`
+        if [ -n "$TMP_LIB" ]; then
+          SVN_PATH="$i"
+        fi
+    fi
+    
+    
+done
+if [ -n "$SVN_PATH" ]; then
+    echo "                              ... found"
+fi
+if [ "X" = "X$SVN_PATH" ]; then
+    echo "                              ... NOT found, module svn disabled"
+fi
+
+echo "Checking for SAP/R3 (librfc/saprfc.h) ..."
+for i in  $LIBDIRS /lib  /usr/lib /usr/local/lib /opt/local/lib .
+do
+    if [ "X" = "X$SAPR3_PATH" ]; then
+        if [ -f "$i/librfc.a" -o -f "$i/librfc.dylib" -o "$i/librfc32.dll" ]; then
+            SAPR3_PATH="$i"
+        fi
+    fi
+    if [ "X" = "X$SAPR3_PATH" ]; then
+        TMP_LIB=`/bin/ls $i/librfc.* $i/librfc32.* 2> /dev/null | grep librfc`
+        if [ -n "$TMP_LIB" ]; then
+          SAPR3_PATH="$i"
+        fi
+    fi
+done
+for i in /usr/local/include /*ssl/include /usr/include .
+do
+    if [ "X" = "X$SAPR3_IPATH" ]; then
+        if [ -f "$i/saprfc.h" ]; then
+            SAPR3_IPATH="$i"
+        fi
+    fi
+done
+if [ "X" = "X$SAPR3_PATH" ]; then
+    SAPR3_IPATH=""
+fi
+if [ "X" = "X$SAPR3_IPATH" ]; then
+    SAPR3_PATH=""
+fi
+if [ -n "$SAPR3_PATH" ]; then
+    echo "                                      ... found"
+fi
+if [ "X" = "X$SAPR3_PATH" ]; then
+    echo "                                      ... NOT found, module sapr3 disabled"
+    echo "Get it from http://www.sap.com/solutions/netweaver/linux/eval/index.asp"
+fi
+if [ "$SAPR3_IPATH" = "/usr/include" ]; then
+    SAPR3_IPATH=""
+fi
+
+echo "Checking for libssh (libssh/libssh.h) ..."
+for i in  $LIBDIRS /lib  /usr/lib /usr/local/lib /opt/local/lib .
+do
+    if [ "X" = "X$SSH_PATH" ]; then
+        if [ -f "$i/libssh.so" -o -f "$i/libssh.dylib" ]; then
+            SSH_PATH="$i"
+        fi
+    fi
+    if [ "X" = "X$SSH_PATH" ]; then
+        TMP_LIB=`/bin/ls $i/libssh.so* 2> /dev/null | grep libssh.`
+        if [ -n "$TMP_LIB" ]; then
+          SSH_PATH="$i"
+        fi
+    fi
+    if [ "X" = "X$SVN_IPATH" ]; then
+        if [ -d "$i/subversion-1" ]; then
+            SVN_IPATH="$i/subversion-1"
+        fi
+    fi  
+    if [ "X" = "X$APR_IPATH" ]; then
+        if [ -d "$i/apr-0" ]; then
+            APR_IPATH="$i/apr-0"
+        fi
+    fi  
+done
+for i in /usr/local/include /*ssl/include /usr/include .
+do
+    if [ "X" = "X$SSH_IPATH" ]; then
+        if [ -f "$i/libssh/libssh.h" ]; then
+            SSH_IPATH="$i"
+        fi
+    fi
+    if [ "X" = "X$SVN_IPATH" ]; then
+        if [ -d "$i/subversion-1" ]; then
+            SVN_IPATH="$i/subversion-1"
+        fi
+    fi  
+    if [ "X" = "X$APR_IPATH" ]; then
+        if [ -d "$i/apr-0" ]; then
+            APR_IPATH="$i/apr-0"
+        fi
+    fi  
+done
+if [ "X" = "X$SSH_PATH" ]; then
+    SSH_IPATH=""
+fi
+if [ "X" = "X$SSH_IPATH" ]; then
+    SSH_PATH=""
+fi
+if [ "X" = "X$SVN_PATH" ]; then
+    SVN_IPATH=""
+fi
+if [ "X" = "X$SVN_IPATH" ]; then
+    SVN_PATH=""
+fi
+if [ "X" = "X$APR_IPATH" ]; then
+    APR_PATH=""
+fi
+
+if [ -n "$SSH_PATH" ]; then
+    echo "                                      ... found"
+    echo 'NOTE: ensure that you have libssh v0.11 installed!! Get it from http://0xbadc0de.be !'
+fi
+if [ "X" = "X$SSH_PATH" ]; then
+    echo "                                      ... NOT found, module ssh2 disabled"
+    echo 'Get it from http://0xbadc0de.be/ - use v0.11!'
+fi
+if [ "$SSH_IPATH" = "/usr/include" ]; then
+    SSH_IPATH=""
+fi
+if [ "$SVN_IPATH" = "/usr/include" ]; then
+    SVN_IPATH=""
+fi
+if [ "$APR_IPATH" = "/usr/include" ]; then
+    APR_IPATH=""
+fi
+
+SYS=`uname -s`
+if [ "$SYS" = "SunOS" ]; then
+    echo "Checking for Solaris libraries ..."
+    for i in  /lib /usr/lib /usr/local/lib $LIBDIRS .
+    do
+        if [ "X" = "X$NSL_PATH" ]; then
+            if [ -f "$i/libnsl.so" ]; then
+                NSL_PATH="$i"
+            fi
+        fi
+        if [ "X" = "X$SOCKET_PATH" ]; then
+            if [ -f "$i/libsocket.so" ]; then
+                SOCKET_PATH="$i"
+            fi
+        fi
+        if [ "X" = "X$RESOLV_PATH" ]; then
+            if [ -f "$i/libresolv.so" ]; then
+                RESOLV_PATH="$i"
+            fi
+        fi
+    done
+    if [ "X" = "X$NSL_PATH" ]; then
+        echo "NSL library not found, which is needed on Solaris."
+    fi
+    if [ "X" = "X$SOCKET_PATH" ]; then
+        echo "Socket library not found, which is needed on Solaris."
+    fi
+    if [ "X" = "X$RESOLV_PATH" ]; then
+        echo "Resolv library not found, which is needed on Solaris."
+    fi
+    echo
+fi
+
+echo
+XDEFINES=""
+XLIBS=""
+XLIBPATHS=""
+XIPATHS=""
+
+# ignore errors if this uname call fails
+SYS=`uname -o 2>/dev/null`
+if [ "$SYS" = "Cygwin" ]; then
+    echo "Cygwin detected, enabling compability options ..."
+    XDEFINES="-DCYGWIN"
+    echo
+fi
+
+if [ -n "$SSL_PATH" -o -n "$CRYPTO_PATH" -o -n "$NSL_PATH" -o -n "$SOCKET_PATH" -o -n "$RESOLV_PATH" -o -n "$SAPR3_PATH" -o -n "$SSH_PATH" -o -n "$POSTGRES_PATH" -o -n "$SVN_PATH" ]; then
+    XLIBPATHS="-L/usr/lib -L/usr/local/lib -L/lib"
+fi
+if [ -n "$SSL_PATH" ]; then
+    XDEFINES="$XDEFINES -DLIBOPENSSL"
+fi
+if [ -n "$SAPR3_PATH" ]; then
+    XDEFINES="$XDEFINES -DLIBSAPR3"
+fi
+if [ -n "$POSTGRES_PATH" ]; then
+    XDEFINES="$XDEFINES -DLIBPOSTGRES"
+fi
+if [ -n "$SVN_PATH" ]; then
+    XDEFINES="$XDEFINES -DLIBSVN"
+fi
+if [ "X" = "X$SVN_PATH" ]; then
+    SVN_IPATH=""
+fi
+if [ "X" = "X$SVN_IPATH" ]; then
+    SVN_PATH=""
+fi
+if [ "X" = "X$APR_IPATH" ]; then
+    APR_PATH=""
+fi
+
+if [ -n "$SSH_PATH" ]; then
+    XDEFINES="$XDEFINES -DLIBSSH"
+fi
+OLDPATH=""
+for i in $SSL_PATH $CRYPTO_PATH $SSH_PATH $NSL_PATH $SOCKET_PATH $RESOLV_PATH $SAPR3_PATH $POSTGRES_PATH $SVN_PATH; do
+    if [ "$OLDPATH" = "$i" ]; then
+      OLDPATH="$i"
+    else
+      XLIBPATHS="$XLIBPATHS -L$i"
+      OLDPATH="$i"
+    fi
+done
+if [ -n "$SSL_IPATH" ]; then
+    XIPATHS="-I$SSL_IPATH"
+fi
+if [ -n "$SAPR3_IPATH" ]; then
+    XIPATHS="$XIPATHS -I$SAPR3_IPATH"
+fi
+if [ -n "$SSH_IPATH" ]; then
+    XIPATHS="$XIPATHS -I$SSH_IPATH"
+fi
+if [ -n "$SVN_IPATH" ]; then
+    XIPATHS="$XIPATHS -I$SVN_IPATH"
+fi
+if [ -n "$APR_IPATH" ]; then
+    XIPATHS="$XIPATHS -I$APR_IPATH"
+fi
+if [ -n "$SVN_IPATH" ]; then
+    XIPATHS="$XIPATHS -I$SVN_IPATH"
+fi
+if [ -n "$APR_IPATH" ]; then
+    XIPATHS="$XIPATHS -I$APR_IPATH"
+fi
+if [ -n "$SSL_PATH" ]; then
+    XLIBS="$XLIBS -lssl"
+fi
+if [ -n "$SAPR3_PATH" ]; then
+    XLIBS="$XLIBS -lrfc"
+    if [ "$SYS" = "Cygwin" ]; then
+      BLA=TMP
+    else
+      XLIBS="$XLIBS -ldl"
+    fi
+fi
+if [ -n "$POSTGRES_PATH" ]; then
+    XLIBS="$XLIBS -lpq"
+fi
+if [ -n "$SVN_PATH" ]; then
+    XLIBS="$XLIBS -lsvn_client-1 -lapr-0 -laprutil-0"
+fi
+if [ -n "$SVN_PATH" ]; then
+    XLIBS="$XLIBS -lsvn_client-1 -lapr-0 -laprutil-0"
+fi
+if [ -n "$SSH_PATH" ]; then
+    XLIBS="$XLIBS -lssh"
+fi
+if [ -n "$CRYPTO_PATH" ]; then
+    XLIBS="$XLIBS -lcrypto"
+fi
+if [ -n "$NSL_PATH" ]; then
+    XLIBS="$XLIBS -lnsl"
+fi
+if [ -n "$SOCKET_PATH" ]; then
+    XLIBS="$XLIBS -lsocket"
+fi
+if [ -n "$RESOLV_PATH" ]; then
+    XLIBS="$XLIBS -lresolv"
+fi
+
+if [ -d /usr/kerberos/include ]; then
+  XIPATHS="$XIPATHS -I/usr/kerberos/include"
+fi
+
+if [ '!' "X" = "X$*" ]; then
+  while [ $# -gt 0 ];
+  do
+    if [ "X" = "X$PREFIX" ]; then
+  	  PREFIX_TMP=`echo "$1"|sed 's/.*--prefix=//'`
+	  if [ $PREFIX_TMP != $1 ]; then
+		  PREFIX=$PREFIX_TMP
+	  fi
+    fi
+    if [ "X" = "X$XHYDRA_SUPPORT" ]; then
+       XHYDRA_SUPPORT_TMP=`echo "$1"|sed 's/.*--disable-xhydra//'`
+       if [ -z $XHYDRA_SUPPORT_TMP ]; then
+	     XHYDRA_SUPPORT="disable"
+       fi
+    fi
+    shift
+  done
+fi
+
+if [ "X" = "X$PREFIX" ]; then
+    PREFIX="/usr/local"
+fi
+
+if [ "X" = "X$XHYDRA_SUPPORT" ]; then
+    XHYDRA_SUPPORT="xhydra"
+fi
+
+echo "Hydra will be installed into .../bin of: $PREFIX"
+echo "  (change this by running ./configure --prefix=path)"
+echo
+
+echo "Writing Makefile.in ..."
+echo "XDEFINES=$XDEFINES" >> Makefile.in
+echo "XLIBS=$XLIBS" >> Makefile.in
+echo "XLIBPATHS=$XLIBPATHS" >> Makefile.in
+echo "XIPATHS=$XIPATHS" >> Makefile.in
+echo "PREFIX=$PREFIX" >> Makefile.in
+if [ $XHYDRA_SUPPORT != "disable" ]; then
+	echo "XHYDRA_SUPPORT=$XHYDRA_SUPPORT" >> Makefile.in
+fi
+echo "STRIP=$STRIP" >> Makefile.in
+echo >> Makefile.in
+
+cat Makefile.unix > Makefile
+cat Makefile.in >> Makefile
+cat Makefile.am >> Makefile
+
+echo
+echo NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES NOTES
+echo =======================================================================
+echo ARM/PalmPilot users: please run ./configure-arm or ./configure-palm respectivly
+echo
+echo "now type \"make\""

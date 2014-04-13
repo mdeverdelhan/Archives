@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE greeter SYSTEM "greeter.dtd">
+<!--
+Based on :
+
+	ShadesOfGray GDM theme
+	======================
+	version 0.1  (04. November 2006)
+		
+	(c) 2006 by Thomas Heßling  <mail AT dream-dimensions.de>
+	Published under the terms of the GNU General Public License, version 2
+	
+    ChangeLog:
+        0.1 (11.07.2006):
+            - initial version
+-->
+
+<greeter>
+
+    <!-- background -->
+    <item type="rect">
+        <normal color="#231037"/>
+        <pos y="0" x="0" width="100%" height="100%"/>
+    </item>
+
+	<!-- the bounding box in the center-->
+    <item type="pixmap">
+        <normal file="shades.png"/>
+		<pos x="50%" y="50%" width="405" height="324" anchor="c"/>
+    </item>
+    
+    <!-- container for labels etc. -->
+    <item type="rect">
+        <pos x="50%" y="50%" width="405" height="324" anchor="c"/>
+
+        <box orientation="horizontal" xpadding="0" spacing="0">
+            <item type="rect">
+                <pos x="0" y="0" width="105" height="100%"/>
+                <box orientation="vertical">
+                    <item type="pixmap" button="true" id="halt_button">
+                        <pos x="41" y="68" anchor="nw"/>
+                        <show modes="console-fixed"/>
+                        <normal file="disconnect_inactive.png"/>
+                        <prelight file="disconnect_active.png"/>
+                    </item>
+                    <item type="pixmap" button="true" id="disconnect_button">
+                        <show modes="remote,flexi"/>
+                        <pos x="41" y="68" anchor="nw"/>
+                        <normal file="disconnect_inactive.png"/>
+                        <prelight file="disconnect_active.png"/>
+                    </item>
+
+                </box>
+            </item>
+            <item type="rect">
+                <pos x="0" y="0" width="300" height="100%" anchor="nw"/>
+                    <box orientation="vertical">
+
+                        <!-- welcome -->
+                        <item type="label" id="welcome-label">
+                            <pos x="15" y="80" anchor="nw"/>
+                            <normal font="Sans Bold 18" color="#231037"/>
+                            <stock type="welcome-label"/>
+                        </item>
+
+                        <!-- username label -->
+                        <item type="label" id="pam-prompt">
+                            <pos x="15" y="136"/>
+                            <normal font="Sans Bold 10" color="#231037"/>
+                            <stock type="username-label"/>
+                        </item>
+
+
+                        <!-- user-pw-entry -->
+                        <item type="entry" id="user-pw-entry">
+                            <pos x="25" y="142" width="210" height="16"/>
+                            <normal font="Sans 10" color="#231037"/>
+                        </item>
+
+                        <item type="rect">
+                            <pos x="15" y="178" width="240"/>
+                            <box orientation="horizontal" homogeneous="true">
+                                <item type="rect" button="true" id="system_button">
+                                    <pos x="0" y="0" anchor="w"/>
+                                    <box orientation="horizontal">
+                                        <item type="label" id="system">
+                                            <normal font="Sans 10 bold" color="#231037"/>
+                                            <stock type="system"/>
+                                        </item>
+                                    </box>
+                                </item>
+                                <item type="rect" button="true" id="session_button">
+                                    <pos x="0" y="0" anchor="w"/>
+                                    <box orientation="horizontal">
+                                        <item type="label" id="session">
+                                            <normal font="Sans 10 bold" color="#231037"/>
+                                            <stock type="session"/>
+                                        </item>
+                                    </box>
+                                </item>
+                                <item type="rect" button="true" id="language_button">
+                                    <pos x="0" y="0" anchor="w"/>
+                                    <box orientation="horizontal">
+                                        <item type="label" id="language">
+                                            <normal font="Sans 10 bold" color="#231037"/>
+                                            <stock type="language"/>
+                                        </item>
+                                    </box>
+                                </item>
+                            </box>
+                        </item>
+
+                    </box>
+
+            </item>
+
+        </box>
+
+    </item>
+
+
+	<!-- caps-lock-warning -->
+	<item type="rect" id="caps-lock-warning">
+		<normal color="#ffffff" alpha="0.2"/>
+		<pos x="0" y="0" width="100%" height="box" anchor="nw"/>
+		<box orientation="vertical" min-width="250" xpadding="10" ypadding="5" spacing="0">
+			<item type="label">
+				<normal color="#ffffff" font="Sans 12"/>
+				<pos x="50%" y="50%" anchor="c"/>
+				<stock type="caps-lock-warning"/>
+			</item>
+		</box>
+    </item>
+
+	<!-- pam-error (login failure etc.) -->
+	<item type="rect" id="pam-error">
+		<pos x="0" y="90%" width="100%" height="box" anchor="sw"/>
+		<box orientation="vertical" min-width="250" xpadding="10" ypadding="5" spacing="0">
+			<item type="label" id="pam-error">
+				<normal color="#ffffff" font="Sans 12"/>
+				<pos x="50%" y="50%" anchor="c"/>
+				<text/>
+			</item>
+		</box>
+    </item>
+
+</greeter>

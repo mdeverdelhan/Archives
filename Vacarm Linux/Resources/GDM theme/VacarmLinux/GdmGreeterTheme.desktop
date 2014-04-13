@@ -1,0 +1,8 @@
+[GdmGreeterTheme]
+Encoding=UTF-8
+Greeter=VacarmLinux.xml
+Name=VacarmLinux
+Description=GDM theme
+Author=Thomas Heßling
+Copyright=(c) 2006 Thomas Heßling (GPLv2)
+Screenshot=screenshot.png

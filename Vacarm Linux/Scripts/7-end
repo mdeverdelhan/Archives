@@ -1,0 +1,8 @@
+#!/bin/bash
+
+WORKSPACE=~/remaster_workspace		# Repertoire de travail
+
+umount ${WORKSPACE}/sys
+umount ${WORKSPACE}/iso
+
+rm -rf ${WORKSPACE}

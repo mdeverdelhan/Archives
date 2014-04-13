@@ -1,0 +1,17 @@
+--- late, later than you hope:
+
+* add "common port" support for the "-1" option
+
+* add result database support
+
+* put trigger info into -m output file?
+
+* implement VOTE results
+
+--- In the far away future you are awaiting:
+
+* a graphical GUI
+
+* maybe it should be possible to send triggers after something has been
+  received. However, this is not needed at this point.
+

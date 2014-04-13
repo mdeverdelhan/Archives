@@ -1,0 +1,13 @@
+#!/bin/bash
+
+
+# Crée le fichier RETIRES.txt contenant la liste des paquets
+# présents dans Ubuntu et qui n'ont pas été conservés dans la
+# nouvelle distribution.
+diff extract-cd/casper/filesystem.manifest filesystem.manifest-ubuntu | grep ">" | awk '{print $2}' > REMOVED.txt
+
+# Crée le fichier AJOUTES.txt contenant la liste des paquets
+# présents dans la nouvelle distribution alors qu'ils ne le
+# sont pas dans Ubuntu.
+diff extract-cd/casper/filesystem.manifest filesystem.manifest-ubuntu | grep "<" | awk '{print $2}' > INSTALLED.txt
+

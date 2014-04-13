@@ -1,0 +1,9 @@
+Package: hydra
+Files: usr/bin/pw-inspector usr/bin/hydra
+Priority: optional
+Section: qpe/applications
+Maintainer: van Hauser <vh@thc.org> / ARM support: TICK <tick@thc.org>
+Architecture: arm
+Version: 5.4
+License: Special
+Description: Online Login/Password Brute-Forcer

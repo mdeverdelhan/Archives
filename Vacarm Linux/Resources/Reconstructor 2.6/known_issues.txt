@@ -1,0 +1,5 @@
+Reconstructor
+
+Known Issues:
+
+-usplash generation does not yet work for Ubuntu 6.10 (Edgy)

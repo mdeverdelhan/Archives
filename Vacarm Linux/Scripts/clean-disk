@@ -1,0 +1,132 @@
+#!/bin/bash
+
+WORKSPACE=~/remaster_workspace		# Repertoire de travail
+
+# Suppression des programmes destinés à Microsoft Windows
+cd ${WORKSPACE}/extract-cd/
+rm -rf programs/ pics/ disctree/ bin/ start.*
+
+# Suppression du dossier qui pointe vers lui même
+rm -f ubuntu
+
+# Suppression des fichiers de langues du CD et du menu de démarrage
+# Commenter celles que l'on souhaite conserver
+rm -f ${WORKSPACE}/extract-cd/isolinux/af.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/ar.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/be.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/bg.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/bn.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/br.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/ca.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/csb.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/cs.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/da.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/de.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/de.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/el.tr
+#rm -f ${WORKSPACE}/extract-cd/isolinux/en.hlp
+#rm -f ${WORKSPACE}/extract-cd/isolinux/en.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/eo.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/es.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/es.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/et.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/eu.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/eu.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/fa.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/fi.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/fil.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/fi.tr
+#rm -f ${WORKSPACE}/extract-cd/isolinux/fr.hlp
+#rm -f ${WORKSPACE}/extract-cd/isolinux/fr.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/ga.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/gl.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/gl.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/hi.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/hr.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/hu.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/hu.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/id.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/id.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/is.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/it.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/ja.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/ja.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/ka.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/ka.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/kn.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/ko.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/ko.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/ku.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/lt.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/lv.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/mk.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/mn.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/ms.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/nb.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/nds.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/nl.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/nl.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/oc.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/pl.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/pl.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/pt_BR.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/pt_BR.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/pt.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/pt.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/ro.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/ru.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/ru.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/sk.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/sk.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/sl.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/so.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/sq.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/sr.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/sv.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/sv.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/ta.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/ta.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/th.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/tr.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/uk.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/ur.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/vi.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/zh_CN.hlp
+rm -f ${WORKSPACE}/extract-cd/isolinux/zh_CN.tr
+rm -f ${WORKSPACE}/extract-cd/isolinux/zh_TW.tr
+
+# Liste des langues du menu de démarrage
+# Rajouter celles que l'on souhaite conserver
+echo en > ${WORKSPACE}/extract-cd/isolinux/langlist
+echo fr >> ${WORKSPACE}/extract-cd/isolinux/langlist
+
+
+# Suppression des pages 9 et 10 du fichier d'aide du menu de démarrage
+rm -f ${WORKSPACE}/extract-cd/isolinux/f9.txt
+rm -f ${WORKSPACE}/extract-cd/isolinux/f10.txt
+
+# Edition de fichiers pour modifications
+nano ${WORKSPACE}/extract-cd/isolinux/en.hlp
+nano ${WORKSPACE}/extract-cd/isolinux/en.tr
+nano ${WORKSPACE}/extract-cd/isolinux/fr.hlp
+nano ${WORKSPACE}/extract-cd/isolinux/fr.tr
+nano ${WORKSPACE}/extract-cd/isolinux/f1.txt
+nano ${WORKSPACE}/extract-cd/isolinux/f2.txt
+nano ${WORKSPACE}/extract-cd/isolinux/isolinux.cfg
+nano ${WORKSPACE}/extract-cd/isolinux/isolinux.txt
+nano ${WORKSPACE}/extract-cd/.disk/info
+nano ${WORKSPACE}/extract-cd/.disk/release_notes_url
+
+
+echo
+echo "Fin du script"
+
+## SYSTEME ##
+
+#apt-get remove --purge ubuntu-base ubuntu-desktop ubuntu-live ubuntu-minimal ubuntu-standard ubuntu-artwork ubuntu-docs
+
+#cp ../fic_livesoh/bookmarkssoh.html extract-squashfs/etc/firefox/profile/bookmarks.html
+
+#apt-get remove --purge appres at at-spi beforelight bitmap fastjar fstobdf gksu ico listres mysql-common 
+
+#themes : gtk2-engines

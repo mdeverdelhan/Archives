@@ -1,0 +1,72 @@
+Hi,
+this is a little howto if you try to compile
+hydra on your own for ARM architecture.
+
+Things you need:
+	+ Sharp's developer kit
+	+ Debian's libssl 0.9.6 for ARM binary package
+		http://www.debian.org/distrib/packages#search_packages
+	+ alien, to a convert deb package to a tar ball
+		http://www.kitenet.net/programs/alien/
+
+Things to do:
+	+ build hydra package
+		+ ./configure-arm
+		+ make
+		+ make buildipkg
+	+ build libssl package
+		+ dowload libssl deb package
+		+ use alien -t to convert it to a tar ball
+		+ build ipkg:
+			> cp ../libssl0.9.6-0.9.6c.tgz arm/libssl/
+			> cd arm/libssl/
+			> l
+			insgesamt 469
+			drwxr-xr-x    3 tick   users         112 2004-03-05 18:33 ./
+			drwxr-xr-x    4 tick   users         160 2004-03-05 18:26 ../
+			drwxr-xr-x    2 tick   users          72 2004-03-05 18:09 CONTROL/
+			-rw-r--r--    1 tick   users      476297 2004-03-05 18:33 libssl0.9.6-0.9.6c.tgz
+			> tar xvzf libssl0.9.6-0.9.6c.tgz
+			./
+			./usr/
+			./usr/lib/
+			./usr/lib/libssl.so.0.9.6
+			./usr/lib/libcrypto.so.0.9.6
+			./usr/share/
+			./usr/share/doc/
+			./usr/share/doc/libssl0.9.6/
+			./usr/share/doc/libssl0.9.6/copyright
+			./usr/share/doc/libssl0.9.6/changelog.gz
+			./usr/share/doc/libssl0.9.6/changelog.Debian.gz
+			> ln -s ./usr/lib/libssl.so.0.9.6 ./usr/lib/libssl.so
+			> ln -s ./usr/lib/libcrypto.so.0.9.6 ./usr/lib/libcrypto.so
+			> rm libssl0.9.6-0.9.6c.tgz
+			> cd ..
+			> ./ipkg-build libssl/
+			*** Warning: The following files have a UID greater than 99.
+			You probably want to chown these to a system user:
+			drwxr-xr-x    4 tick   users          96 2004-03-05 18:34 .
+			drwxr-xr-x    2 tick   users          72 2004-03-05 18:09 ./CONTROL
+			-rw-r--r--    1 tick   users         155 2004-03-05 18:09 ./CONTROL/control
+			drwxr-xr-x    4 tick   users          96 2003-10-01 02:34 ./usr
+			drwxr-xr-x    2 tick   users         184 2004-03-05 18:34 ./usr/lib
+			lrwxrwxrwx    1 tick   users          28 2004-03-05 18:34 ./usr/lib/libcrypto.so -> ./usr/lib/libcrypto.so.0.9.6
+			-rw-r--r--    1 tick   users      801088 2003-10-01 02:41 ./usr/lib/libcrypto.so.0.9.6
+			lrwxrwxrwx    1 tick   users          25 2004-03-05 18:34 ./usr/lib/libssl.so -> ./usr/lib/libssl.so.0.9.6
+			-rw-r--r--    1 tick   users      187140 2003-10-01 02:41 ./usr/lib/libssl.so.0.9.6
+			drwxr-xr-x    3 tick   users          72 2003-10-01 02:34 ./usr/share
+			drwxr-xr-x    3 tick   users          80 2003-10-01 02:34 ./usr/share/doc
+			drwxr-xr-x    2 tick   users         152 2003-10-01 02:42 ./usr/share/doc/libssl0.9.6
+			-rw-r--r--    1 tick   users        3735 2003-10-01 01:47 ./usr/share/doc/libssl0.9.6/changelog.Debian.gz
+			-rw-r--r--    1 tick   users       63337 2003-10-01 01:47 ./usr/share/doc/libssl0.9.6/changelog.gz
+			-rw-r--r--    1 tick   users        6384 2003-10-01 01:47 ./usr/share/doc/libssl0.9.6/copyright
+
+			Packaged contents of libssl/ into ./libssl_0.9.6_arm.ipk
+			> 
+	+ cp both ipkg files to your Zaurus/iPAQ
+	+ install libssl ipkg
+	+ run ldconfig
+	+ install hydra ipkg
+
+tick
+

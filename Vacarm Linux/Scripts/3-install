@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# sûrs
+apt-get install aircrack deborphan dialog ethereal ethereal-common john kismet libgdchart-gd2-noxpm libnessus2 libnet-ssleay-perl libpcre3 libwhisker-perl nessus nikto nmap p0f airsnort ettercap ettercap-common libltdl3 libnet1 libssl0.9.7 libpcap0.7 netwox autopsy binutils foremost libdate-manip-perl sleuthkit chkrootkit liblockfile1 libevent1 privoxy tor tsocks socat hping2 tcpdump dsniff libdb4.2 libnids1.20
+
+# liba52-0.7.4 libdc1394-13 libdvbpsi4 libdvdnav4 libdvdread3 libgsm1 libid3tag0 libiso9660-4 libmad0 libmodplug0c2
+# libmpcdec3 libmpeg2-4 libtar libvcdinfo0 libwxgtk2.6-0 libxosd2 vlc vlc-plugin-alsa wxvlc
+
+# hydra amap bkhive samdump2 rainbowcrack aircrack-ng
+

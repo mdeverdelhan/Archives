@@ -1,0 +1,43 @@
+* Upcoming features in v6.0:
+  - IPv6 support
+  - brute force mode
+  - distributed hydra support
+
+* add NCP, rdesktop module
+
+* -e r option (reverse login as password)
+
+* TEST:
+    ldap
+    pcnfs
+    cvs
+
+* Web Update Feature?
+
+* KNOWN PROBLEMS:
+  will loose one pair if connect errors terminate child while others are running
+
+* hydra-webform
+  - Get initial cookie from
+    ~ cmdline
+    ~ url
+  - Get cookie/target URL/form id for each request from
+    ~ file
+    ~ url
+  - Set Headers
+    ~ all
+    ~ initial cookie
+    ~ each cookie
+  - Form values
+    ~ %%L as wildcard for login
+    ~ %%P as wildcard for password
+
+* add Netbios lookup, session ID and encryption support to SMB module
+
+* add PPTP
+
+* add pcanywhere
+
+* add oracle
+
+* add RIP, OSPF, BGP

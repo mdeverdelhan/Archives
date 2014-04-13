@@ -1,0 +1,65 @@
+#include "hydra.h"
+
+FORM ID idMainForm AT (2 2 156 156)
+MENUID idMenu
+  BEGIN
+    TITLE "Hydra 0.01"
+      LABEL "Protocol:" AUTOID AT (10 15)
+      POPUPTRIGGER "FTP" ID idPopuplist AT (60 15 AUTO AUTO) LEFTANCHOR
+      LIST "FTP" "POP3" "TELNET" "VNC" "IMAP" "CISCO" "NNTP" "VMAUTHD" ID idProtocols AT (PrevLeft PrevTop AUTO AUTO) NONUSABLE VISIBLEITEMS 4
+      POPUPLIST idPopuplist idProtocols
+      
+
+      LABEL "IP:" AUTOID AT (10 30)
+      FIELD ID idIp1 AT (60 30 16 AUTO) LEFTALIGN FONT 0 USABLE EDITABLE UNDERLINED MAXCHARS 3 
+      FIELD ID idIp2 AT (80 30 16 AUTO) LEFTALIGN FONT 0 USABLE EDITABLE UNDERLINED MAXCHARS 3 
+      FIELD ID idIp3 AT (100 30 16 AUTO) LEFTALIGN FONT 0 USABLE EDITABLE UNDERLINED MAXCHARS 3 
+      FIELD ID idIp4 AT (120 30 16 AUTO) LEFTALIGN FONT 0 USABLE EDITABLE UNDERLINED MAXCHARS 3 
+      LABEL "." AUTOID AT (78 30)
+      LABEL "." AUTOID AT (98 30)
+      LABEL "." AUTOID AT (118 30)
+    
+      LABEL "Port:" AUTOID AT (10 45)
+      FIELD ID idPort  AT (60 45 80 AUTO) LEFTALIGN FONT 0  USABLE EDITABLE UNDERLINED MAXCHARS 5
+    
+      LABEL "Username:" AUTOID AT (10 60)
+      FIELD ID idUsername AT (60 60 80 AUTO) LEFTALIGN FONT 0  USABLE EDITABLE UNDERLINED MAXCHARS 14
+
+      LABEL "Password:" AUTOID AT (10 75)
+      FIELD ID idPassword AT (60 75 80 AUTO) LEFTALIGN FONT 0  USABLE EDITABLE UNDERLINED MAXCHARS 14
+    
+      LABEL "Status:" AUTOID AT (10 90)
+      FIELD ID idStatus AT (60 90 80 45) LEFTALIGN FONT 0 MULTIPLELINES UNDERLINED MAXCHARS 100
+    
+      BUTTON "Start" ID idStart AT (10 140 AUTO AUTO)
+      BUTTON "Stop" ID idStop AT (50 140 AUTO AUTO)
+  END
+  MENU ID idMenu
+    BEGIN
+      PULLDOWN "Help"
+      BEGIN
+        MENUITEM "About" ID idMenuAbout
+        MENUITEM "Help" ID idMenuHelp
+      END
+    END
+
+
+FORM ID idHelpForm AT (2 2 156 156)
+  BEGIN
+    TITLE "Help"
+      LABEL "Just enter all the values you need... :)" AUTOID AT (10 30)
+      LABEL "Leave password or login emptry" AUTOID AT (10 50)
+      LABEL "to use the database" AUTOID AT (10 60)
+      LABEL "Thats it..." AUTOID AT (10 80)
+      BUTTON "Back" ID idBack AT (60 130 AUTO AUTO)
+  END
+
+FORM ID idAboutForm AT (2 2 156 156)
+  BEGIN
+    TITLE "About"
+      LABEL "Hydra port to palmos" AUTOID AT (10 30)
+      LABEL "Maintainer: snakebyte@gmx.de" AUTOID AT (10 60)
+      LABEL "Original Hydra code by: van Hauser" AUTOID AT (10 75)
+      LABEL "Download at www.thc.org" AUTOID AT (10 90)
+      BUTTON "Back" ID idBack AT (60 130 AUTO AUTO)
+   END

@@ -1,0 +1,24 @@
+This is a hydra port to palmos.
+Tested so far on the 5.0 Emulator and a Sony Clie 5.0.
+
+The following hydra-modules are working:
+ telnet
+ ftp
+ pop3
+ imap
+ nntp
+ cisco
+ vnc
+
+Since palmos 5 is single threaded the bruteforce is much slower than from
+a pc :( Hope we can speed this up with palmos 6
+
+To create password / user lists for palmos, use the create_db.pl script, 
+alternatively you can use the palmcrack database for passwords.
+To create the password list you also need pdbc, which you can download from
+http://obermuhlner.com/public/Projects/Palm/PDBC/
+( only windows exe files provided, but compiles under linux too )
+
+The current maintainer of this branch is Eric "snakebyte" Sesterhenn, you
+can reach me at snakebyte(at)gmx(dot)de
+
