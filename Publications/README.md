@@ -2,7 +2,7 @@
 
 #### [GNU/Linux Magazine France n° 141](http://www.unixgarden.com/index.php/gnu-linux-magazine/gnulinux-magazine-n-141-septembre-2011-chez-votre-marchand-de-journaux) - septembre 2011
 
-  * _Développement d’un lecteur d’animations Blender avec Ogre3D_ (p82)
+  * _Développement d’un lecteur d’animations Blender avec Ogre3D_ (p82) - [Code source](https://github.com/mdeverdelhan/Archives/tree/master/Publications/glmf141/AnimApp)
 
 #### [Linux Pratique n° 59](http://www.unixgarden.com/index.php/sommaire/linux-pratique-n-59-maijuin-2010-chez-votre-marchand-de-journaux) - mai/juin 2010
 
@@ -10,8 +10,8 @@
 
 #### [GNU/Linux Magazine France HS n° 47](http://www.unixgarden.com/index.php/gnu-linux-magazine-hs/gnulinux-magazine-hs-n-47-avrilmai-2010-chez-votre-marchand-de-journaux) - avril/mai 2010
 
-  * _Ma première application Android – 1ère partie_ (p4)
-  * _Ma première application Android – 2nde partie_ (p11)
+  * _Ma première application Android – 1ère partie_ (p4) - [Code source](https://github.com/mdeverdelhan/Archives/tree/master/Publications/glmfhs47/MyFirstApp_partie1)
+  * _Ma première application Android – 2nde partie_ (p11) - [Code source](https://github.com/mdeverdelhan/Archives/tree/master/Publications/glmfhs47/MyFirstApp_partie2)
   
 #### [Linux Pratique n° 51](http://www.unixgarden.com/index.php/sommaire/linux-pratique-n-51-janvierfevrier-2009-chez-votre-marchand-de-journaux) - janvier/février 2009
 
