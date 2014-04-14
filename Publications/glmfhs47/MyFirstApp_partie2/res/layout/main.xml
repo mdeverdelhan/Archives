@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<TextView android:id="@+id/titre"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="10sp"
+		android:text="@string/app_name"
+		android:textColor="#0f0"
+		android:textSize="28sp">
+	</TextView>
+	<TextView android:id="@+id/texteRayon"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text=" Localisation à moins de :"
+		android:layout_below="@+id/titre"
+		android:layout_marginBottom="12sp"
+		android:textStyle="bold"
+		android:layout_marginTop="20sp">
+	</TextView>
+	
+	<Button android:id="@+id/btn10km"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:textStyle="bold"
+		android:text="10 km"
+		android:textColor="#7f0"
+		android:layout_below="@+id/texteRayon"
+		android:width="30pt">
+	</Button>
+	<TextView android:id="@+id/texte10km"
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:layout_alignBaseline="@+id/btn10km"
+		android:text="Vous pouvez presque y aller à pied."
+		android:layout_toRightOf="@+id/btn10km"
+		android:textSize="13sp">
+	</TextView>
+	
+	<Button android:id="@+id/btn30km" android:layout_height="wrap_content" android:textStyle="bold" android:text="30 km" android:layout_width="wrap_content" android:textColor="#f70" android:layout_below="@+id/btn10km" android:width="30pt"></Button>
+	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/texte30km" android:layout_alignBaseline="@+id/btn30km" android:text="Songez au bilan CO2 de votre voyage..." android:layout_toRightOf="@+id/btn30km" android:textSize="13sp"></TextView>
+
+	<Button android:id="@+id/btn50km" android:layout_height="wrap_content" android:textStyle="bold" android:text="50 km" android:layout_width="wrap_content" android:textColor="#f00" android:layout_below="@+id/btn30km" android:width="30pt"></Button>
+	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/texte50km" android:layout_alignBaseline="@+id/btn50km" android:text="Que signifie pour vous le mot 'écologie' ?" android:layout_toRightOf="@+id/btn50km" android:textSize="13sp"></TextView>
+
+</RelativeLayout>
