@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2010 Marc de Verdelhan (http://www.verdelhan.eu/)
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+    <string name="app_name">DoYouEarn</string>
+    
+    <!-- Onglets -->
+    <string name="tag_onglet1">tagSalaire</string>
+    <string name="label_onglet1">Salaire</string>
+    <string name="tag_onglet2">tagStatistiques</string>
+    <string name="label_onglet2">Statistiques</string>
+    <string name="tag_onglet3">tagAide</string>
+    <string name="label_onglet3">Aide</string>
+    
+    <!-- Menus -->
+    <string name="menu_parametres">Paramètres</string>
+    <string name="menu_quitter">Quitter</string>
+    
+    <!-- Texte -->
+    <string name="texte_salaire_mensuel">Saisissez votre salaire mensuel :</string>
+    <string name="texte_bouton_calculer">Calculer</string>
+    <string name="texte_salaire_gagne">Depuis le lancement de cette stupide application vous avez gagné :</string>
+    
+    <!-- Vérification formulaire salaire -->
+    <string name="msg_erreur_salaire_non_numerique">Veuillez saisir votre salaire mensuel.</string>
+    <string name="msg_erreur_salaire_trop_eleve">C'est beaucoup trop !</string>
+    
+    <!-- Devises -->
+    <string-array name="liste_devises">
+        <item>EUR (€)</item>
+        <item>USD ($)</item>
+    </string-array>
+    
+    <!-- Texte stats -->
+    <string name="texte_avant_stats">Veuillez indiquer votre salaire mensuel.</string>
+    <string name="texte_votre_salaire">Votre salaire</string>
+    <string name="texte_par_jour">\tpar jour</string>
+    <string name="texte_par_heure">\tpar heure</string>
+    <string name="texte_par_minute">\tpar minute</string>
+    <string name="texte_par_seconde">\tpar seconde</string>
+    
+    <!-- Texte Aide -->
+    <string name="label_utilisation">Utilisation</string>
+    <string name="texte_utilisation">Entrez votre salaire mensuel et cliquez sur \"Calculer\".</string>
+    
+    <string name="label_devises">Devises</string>
+    <string name="texte_definitions_devises">- EUR : Euro (€)\n- USD : Dollar US ($)</string>
+    
+    <!-- Texte Améliorations -->
+    <string name="label_ameliorations">Fonctionnalités à venir</string>
+    <string name="texte_ameliorations">- Paramètres utilisateurs\n- Plus de devises\n- Internationalisation (plus de langues)\n- Amélioration de l\'IHM\n- ...</string>
+    
+    <string name="texte_autres_applications">Découvrez nos autres applications !</string>
+    <string name="texte_erreur_market">Impossible d\'accéder à l\'Android Market.</string>
+    
+</resources>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2010 Marc de Verdelhan (http://www.verdelhan.eu/)
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.droideilhan.doyouearn"
+    android:id="@+id/tabhost"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <!-- Boutons des onglets -->
+    <TabWidget android:id="@android:id/tabs"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+    </TabWidget>
+    
+    <!-- Début du contenu des onglets -->
+    <FrameLayout android:id="@android:id/tabcontent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingTop="62px">
+        
+        <!-- Onglet n°1 -->
+        <ScrollView android:id="@+id/scrollViewFormulaire" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <RelativeLayout android:id="@+id/tab1"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:paddingBottom="50dip">
+                
+                <com.admob.android.ads.AdView
+                    android:id="@+id/adFormulaire"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    app:backgroundColor="#181818"
+                    app:primaryTextColor="#FFFFFF"
+                    app:secondaryTextColor="#CCCCCC"
+                    app:keywords="money month salary"/>
+                
+                <Spinner android:id="@+id/spinnerDevise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/adFormulaire"/>
+                    
+                <EditText android:id="@+id/editTextSalaire"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:numeric="decimal"
+                    android:maxLength="10"
+                    android:singleLine="true"
+                    android:layout_alignBaseline="@id/spinnerDevise"
+                    android:layout_toLeftOf="@id/spinnerDevise"/>
+                    
+                <Button android:id="@+id/buttonCalculer"
+                    android:text="@string/texte_bouton_calculer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/spinnerDevise"
+                    android:layout_centerHorizontal="true"
+                    android:minWidth="160dip"/>
+                
+                <TextView android:id="@+id/textViewSalaireGagne"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texte_salaire_gagne"
+                    android:textColor="@color/texte_normal"
+                    android:layout_below="@id/buttonCalculer"
+                    android:visibility="gone"/>
+                
+                <WebView android:id="@+id/webViewSalaireChangeant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewSalaireGagne"/>
+                    
+            </RelativeLayout>
+        </ScrollView>
+            
+        <!-- Onglet n°2 -->
+        <ScrollView android:id="@+id/scrollViewStats" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:id="@+id/tab2"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+    
+                <com.admob.android.ads.AdView
+                    android:id="@+id/adStats"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:backgroundColor="#181818"
+                    app:primaryTextColor="#FFFFFF"
+                    app:secondaryTextColor="#CCCCCC"
+                    app:keywords="money dollar euro"/>
+    
+                <TextView android:id="@+id/textViewVotreSalaire"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texte_votre_salaire"
+                    android:textColor="@color/texte_normal"
+                    android:textSize="20sp"
+                    android:visibility="gone"/>
+                    
+                <TextView android:id="@+id/textViewSalaireJour"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texte_par_jour"
+                    android:textColor="@color/texte_normal"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:background="@color/background_texte_periode"/>
+                    
+                <WebView android:id="@+id/webViewSalaireJour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+                    
+                <TextView android:id="@+id/textViewSalaireHeure"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texte_par_heure"
+                    android:textColor="@color/texte_normal"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:background="@color/background_texte_periode"/>
+                    
+                <WebView android:id="@+id/webViewSalaireHeure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+                    
+                <TextView android:id="@+id/textViewSalaireMinute"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texte_par_minute"
+                    android:textColor="@color/texte_normal"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:background="@color/background_texte_periode"/>
+                    
+                <WebView android:id="@+id/webViewSalaireMinute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+                    
+                <TextView android:id="@+id/textViewSalaireSeconde"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texte_par_seconde"
+                    android:textColor="@color/texte_normal"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:background="@color/background_texte_periode"/>
+                    
+                <WebView android:id="@+id/webViewSalaireSeconde"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+                    
+                <TextView android:id="@+id/textViewAvantStats"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texte_avant_stats"
+                    android:textColor="@color/texte_estompe"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dip"/>
+                    
+            </LinearLayout>
+        </ScrollView>
+            
+        <!-- Onglet n°3 -->
+        <ScrollView android:id="@+id/scrollViewAide" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:id="@+id/tab3"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+    
+                <!-- Aide -->
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_utilisation"
+                    android:textColor="@color/texte_normal"
+                    android:textSize="20sp"/>
+                    
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texte_utilisation"
+                    android:textColor="@color/texte_normal"
+                    android:layout_marginLeft="10dip"/>
+                    
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_devises"
+                    android:textColor="@color/texte_normal"
+                    android:textSize="20sp"
+                    android:layout_marginTop="20dip"/>
+                    
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texte_definitions_devises"
+                    android:textColor="@color/texte_normal"
+                    android:layout_marginLeft="10dip"/>
+    
+                <!-- Fonctionnalités à venir -->
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_ameliorations"
+                    android:textColor="@color/texte_normal"
+                    android:textSize="20sp"
+                    android:layout_marginTop="20dip"/>
+                    
+                <TextView android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texte_ameliorations"
+                    android:textColor="@color/texte_normal"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginBottom="10dip"/>
+                    
+                <Button android:id="@+id/buttonAutresApps"
+                    android:text="@string/texte_autres_applications"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dip"/>
+                    
+            </LinearLayout>
+        </ScrollView>
+        
+    </FrameLayout>
+    <!-- Fin du contenu des onglets -->
+</TabHost>
