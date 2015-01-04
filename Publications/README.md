@@ -31,8 +31,4 @@
 
 #### [GNU/Linux Magazine France n° 102](http://www.unixgarden.com/index.php/gnu-linux-magazine/gnu-linux-magazine-102-fevrier-2008-chez-votre-marchand-de-journaux) - février 2008
 
-  * _[Développement et mise en place d'un démon Unix](http://www.unixgarden.com/index.php/gnu-linux-magazine/developpement-et-mise-en-place-d-un-demon-unix)_ (p66)
-
-
-
-  
+  * _[Développement et mise en place d'un démon Unix](http://connect.ed-diamond.com/GNU-Linux-Magazine/GLMF-102/Developpement-et-mise-en-place-d-un-demon-Unix)_ (p66)
